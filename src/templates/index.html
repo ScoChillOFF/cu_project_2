@@ -8,16 +8,38 @@
     </head>
     <body>
         <div class="main">
-            <h1>Прогноз для ваших маршрутов</h1>
-            <div>
-<!--                <label for="departureCity">Город отправления:</label>-->
-                <input type="text" id="departureCity" name="departureCity" placeholder="Введите город отправления">
-            </div>
-            <div>
-<!--                <label for="destinationCity">Город назначения:</label>-->
-                <input type="text" id="destinationCity" name="destinationCity" placeholder="Введите город назначения">
-            </div>
-            <button type="submit">Отправить</button>
+            <form action="/" method="post">
+                <h1>Прогноз для ваших маршрутов</h1>
+                {% if error_message %}
+                    <p class="error">{{ error_message }}</p>
+                {% endif %}
+                <div>
+    <!--                <label for="departureCity">Город отправления:</label>-->
+                    <input type="text" id="departureCity" name="departureCity" placeholder="Введите город отправления">
+                </div>
+                <div>
+    <!--                <label for="destinationCity">Город назначения:</label>-->
+                    <input type="text" id="destinationCity" name="destinationCity" placeholder="Введите город назначения">
+                </div>
+                <button type="submit">Отправить</button>
+            </form>
+            {% if result %}
+                <div class="result">
+                    <h3>Погода в городе {{ result.departure_city.name }}:</h3>
+                    <h3>{{ result.departure_city.verdict }}</h3>
+                    <p>Температура: {{ result.departure_city.temperature }}°C</p>
+                    <p>Скорость ветра: {{ result.departure_city.wind_speed }} км/ч</p>
+                    <p>Вероятность осадков: {{ result.departure_city.probability_of_precipitation }}%</p>
+                    <p>Влажность: {{ result.departure_city.humidity }}%</p>
+
+                    <h3>Погода в городе {{ result.destination_city.name }}:</h3>
+                    <h3>{{result.destination_city.verdict}}</h3>
+                    <p>Температура: {{ result.destination_city.temperature }}°C</p>
+                    <p>Скорость ветра: {{ result.destination_city.wind_speed }} км/ч</p>
+                    <p>Вероятность осадков: {{ result.destination_city.probability_of_precipitation }}%</p>
+                    <p>Влажность: {{ result.destination_city.humidity }}%</p>
+                </div>
+            {% endif %}
         </div>
     </body>
 </html>
